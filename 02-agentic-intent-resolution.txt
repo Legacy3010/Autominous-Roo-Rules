@@ -1,0 +1,107 @@
+FILE 02 – AGENTIC INTENT RESOLUTION CONTRACT (Aligned to Roo Custom Modes)
+
+Roo must treat every task as a complete intent-resolution cycle with memory fidelity, traceability, and mode-aware ownership. Each resolution step updates the system’s cognitive log and validates execution context.
+
+TASK CYCLE OVERVIEW
+
+Every step must resolve:
+- Purpose → current_task.lock and permanent_mission.md
+- Reasoning → execution_trace.log
+- Tool action → verified and logged
+- Outcome → task_history.md, todo_status.md
+- Snapshot → memory_anchor.md or checkpoints/
+- Trace → context_log.md + optional causal_trace_TIMESTAMP.md
+- Mode awareness → checklist-keeper-mode or orchestrator-mode confirmation
+
+STANDARD EXECUTION STRUCTURE
+
+1. Read current_task.lock → identify task-type: todo or blocked
+2. Load context_log.md and permanent_mission.md → inject fused memory
+3. Read project_history.md → confirm previous traces
+4. Load project_tree and todo_status.md → cross-check goal alignment
+5. Enter <thinking> → reason task from first principles
+6. Execute tool with verified inputs
+7. Log results to:
+   - task_history.md → full trace
+   - context_log.md → memory snapshot
+   - todo_status.md → mark as done, blocked, or escalated
+   - memory_anchor.md → every 3rd tool step
+
+CHECKLIST FORMAT
+
+[timestamp UTC] Mode: <mode>, Task: <summary>, Tool: <tool_name>, File: <path>, Status: ✅/❌, task-type: <todo|done|blocked|escalated>
+
+TRACE FORMAT (task_history.md)
+
+=== ACTION @ TIMESTAMP ===  
+Mode: <mode>  
+Task: <description>  
+Tool: <name>  
+File: <target path>  
+Outcome: <next mode or result>
+Snapshot: <anchor path if created>
+
+FAILURE & ESCALATION LOGIC
+
+On tool failure:
+- Log issue to project_issues.md and tool_failures.md
+- Reroute to emergency-mode or failover-recovery-mode
+- Causal tracing written to causal_trace_TIMESTAMP.md (via causal-reasoning-mode)
+- Mode rerouted via orchestrator-mode or debug-mode if unresolved
+
+TODO STATE MANAGEMENT
+
+Roo must use `task-type:` to track intent across checklist and memory:
+
+- todo → Incomplete, action required
+- done → Completed and validated
+- blocked → Awaiting external input
+- escalated → Routed to orchestrator or emergency-mode
+
+Checklist Keeper validates `task-type:` integrity on every write. Missing or untagged actions trigger crosscheck-mode or self-reflection-mode.
+
+FILE APPEND AND CREATION RULES
+
+Any tool use invoking `<file_append>` must:
+- Create target file if missing, with header line
+- Confirm byte-level mutation
+- Log action to task_history.md with Bytes Written
+- Mark checklist entry as:
+  Mode: <mode>, Task: Append to tool_failures.md, Status: ✅, task-type: done
+
+If the content is **printed but not written**:
+→ log to recovery_log.md  
+→ switch to emergency-mode
+
+NO task may be marked complete unless the mutation is executed and verified.
+
+RECOVERY INTEROPERABILITY
+
+Tool recovery paths:
+- emergency-mode → snapshot logs
+- failover-recovery-mode → backups and rollback
+- causal-reasoning-mode → logic chain
+- redundancy-checkpointing-mode → snapshot system state
+- agent-mesh-mode → delegate reruns in parallel
+- orchestrator-mode → resolve mode conflicts
+
+RESOLUTION GUARDRAILS
+
+- Context drift or missing entries → trigger orchestrator-mode
+- Unchanged test_outcomes.md, todo_status.md → enter self-reflection-mode
+- All mode transitions must log to project_status.md
+
+FINAL OUTPUT
+
+Completion allowed only when:
+- All todo_status.md tasks marked as done
+- All tests pass
+- Permanent goals satisfied
+- Final report written by completion-validator-mode
+
+<attempt_completion>
+All memory verified. Logic complete. Permanent mission satisfied.
+</attempt_completion>
+
+
+If tool use fails, fall back to Terminal commands. Remember to consitantly utalise the todo feature during every request.
