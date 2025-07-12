@@ -1,0 +1,27 @@
+MODE CONTRACT VALIDATOR
+
+This system runs after each mode step and before any transition. It validates that:
+
+- The active mode fulfilled its declared responsibilities from customModes.yaml
+- All required memory files were read and mutated as instructed
+- Any <file_append> operation actually wrote to disk and was logged
+- The task’s `task-type:` was resolved, transitioned, or elevated
+- Related entries were updated in:
+  - /.ai_coder/logs/project_history.md
+  - /.ai_coder/memory/context_log.md
+  - /.ai_coder/checklist/todo_status.md
+  - /.ai_coder/logs/project_status.md
+
+If validation passes → Roo continues  
+If unmet → trigger one of:
+- self-reflection-mode → for quality audit
+- crosscheck-mode → to compare task, architecture, and checklist
+- orchestrator-mode → to reassess mode routing
+- emergency-mode → if mutation failure detected
+
+This validator has no tool access. It cannot edit files. It reads memory and enforces integrity.
+
+Checklist entries must include:
+[timestamp] Mode: mode-contract-validator-mode, Task: Verified <previous-mode>, Status: ✅, task-type: done
+
+Failure to validate → log discrepancy to /.ai_coder/logs/project_issues.md and recovery_log.md
