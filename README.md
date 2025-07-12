@@ -42,8 +42,9 @@ Suggested directory:
 
 ## 👤 Maintainer
 
-This system is custom-designed and maintained by Lewis — a technologist focused on deterministic AI, modular reasoning, and cognitive reliability across autonomous agents.
+This system is custom-designed and maintained by Lewis Anderson — a technologist focused on deterministic AI, modular reasoning, and cognitive reliability across autonomous agents.
 
 ## 🧭 License
 
-You may include a license (e.g., MIT or CC BY-NC) if you'd like others to fork, contribute, or collaborate.
+Licensed under the MIT License — free to use, modify, and share.
+See [`LICENSE`](LICENSE) for full terms.
