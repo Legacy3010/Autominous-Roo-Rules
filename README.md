@@ -1,67 +1,49 @@
 # Autominous-Roo-Rules
 Autonomous Roo rule structure and mode definitions.
-# 🧠 Roo Agent – Deterministic AI Mode Engine
+# 🧠 Roo Agent – Deterministic Cognitive System
 
-Roo is a modular autonomous system designed for deterministic task resolution, memory fidelity, and fault-tolerant execution. It operates through a rich mesh of custom modes, file scaffolding, and recovery logic to ensure every AI action is transparent, logged, and correctable.
+Roo is a custom-built autonomous cognition engine designed for reliable execution, structured memory, and modular reasoning. It operates through a sophisticated mesh of modes, each responsible for distinct phases of logic, validation, and recovery — with zero reliance on generative guesswork or external products.
 
-## 🌐 Project Overview
+This repository contains Roo's foundational rule system:
 
-This repository contains the foundational rule system that governs Roo's internal cognition loop:
+- **FILE 00 – Core Agent Structure**  
+  Defines the complete memory architecture for Roo, including logs, goals, snapshots, and failure recovery paths.
 
-- **Core agent structure** (`FILE 00`)  
-  Defines Roo’s internal memory layout: directories, file ownership, and logging protocols.
+- **FILE 01 – All Modes System Prompt**  
+  Specifies Roo’s behavioral mesh, outlining the responsibilities, fallback chains, and completion logic for each mode.
 
-- **All modes system prompt** (`FILE 01`)  
-  Describes the behavior of all active modes, including fallback routing and completion logic.
+- **FILE 02 – Agentic Intent Resolution Contract**  
+  Enforces task lifecycle integrity from planning to logging to snapshot validation, ensuring every action is traceable and accountable.
 
-- **Agentic intent resolution contract** (`FILE 02`)  
-  Outlines the lifecycle of every task, including tool invocation, failure tracing, and task classification (`task-type: todo`, `blocked`, etc).
+These rules work in tandem with a mode definition file (e.g., `customModes.yaml`), which contains over 20 custom roles like `test-mode`, `emergency-mode`, `causal-reasoning-mode`, `checklist-keeper-mode`, and `agent-mesh-mode`.
 
-These files work in harmony with Roo’s `customModes.yaml`, which defines each cognitive mode used in the system (e.g., test-mode, emergency-mode, report-mode, agent-mesh-mode, and more).
+## 🔧 System Highlights
 
-## 🛠 Architecture Highlights
+- ✅ Deterministic memory scaffolding using append-only logs and structured task types (`todo`, `blocked`, `done`, `escalated`)
+- 📋 Mode-aware task tracking with automatic recovery on failure
+- 🔁 Tool enforcement policies with fallback escalation and causal tracing
+- 🛠 Fast file and context access through integrated MCP servers
+- 🧠 Optional support from Gemini CLI for external reasoning assistance
 
-- ✅ **Append-only memory** with snapshot recovery  
-- 🧩 **Mode-to-file mapping** for memory accountability  
-- 📋 **Checklist integrity** with task-type classification  
-- 🔐 **Failure escalation** via causal reasoning and emergency fallback  
-- 🚀 **Parallel task dispatch** using agent-mesh-mode and fast MCP integration
+## 💡 Memory & Recovery Features
 
-## 🧬 Mode Contract Validator (New Addition)
+- Snapshots are taken every few tool steps via `redundancy-checkpointing-mode`
+- All failures trace through `tool_failures.md` and escalate via `failover-recovery-mode`
+- Every task is validated against a permanent mission goal stored in `permanent_mission.md`
+- Roo uses reasoning blocks (`<thinking>`) before every tool call — no silent execution
 
-To ensure each mode operates exactly as defined, Roo includes a universal validator that checks:
+## 📦 Integration & Usage
 
-- That required memory files are read/written  
-- That each action updates logs and checklists properly  
-- That mode responsibilities match observed behavior
+This repo is platform-agnostic. You may connect it to your own runtime, terminal agent, local AI assistant, or experimental cognition stack.
 
-Failed validations escalate automatically to the appropriate reasoning or recovery mode.
+Suggested directory:  
+`/rules/` → Drop all three files here for immediate use  
+`/modes/` → Place your mode definitions (YAML or JSON) to activate Roo’s mesh
 
-## ⚡ Getting Started
+## 👤 Maintainer
 
-You can clone this repo and connect it to your Roo runtime or VS Code environment:
+This system is custom-designed and maintained by Lewis — a technologist focused on deterministic AI, modular reasoning, and cognitive reliability across autonomous agents.
 
-```bash
-git clone https://github.com/your-username/roo-agent-rules
-From there, you can:
+## 🧭 License
 
-Explore or modify the rule files inside /rules/
-
-Review the mode definitions via customModes.yaml
-
-Use the structure to build your own deterministic cognition agent
-
-📦 Related Technologies
-This system is designed to integrate with:
-
-MCP Servers (Model Context Protocol) for high-speed reasoning and file access
-
-Gemini CLI for fallback inference or external code suggestions
-
-VS Code Copilot Chat Extension for agent-mode compatibility
-
-👤 Author
-Created by Lewis — visionary technologist exploring deterministic AI, abstract storytelling, and fault-resilient automation.
-
-🧭 License
-To share, fork, or contribute, define your license here (MIT recommended for open collaboration).
+You may include a license (e.g., MIT or CC BY-NC) if you'd like others to fork, contribute, or collaborate.
