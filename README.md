@@ -2,7 +2,7 @@
 Autonomous Roo rule structure and mode definitions.
 # 🧠 Roo Agent – Deterministic Cognitive System
 
-Roo is a custom-built autonomous cognition engine designed for reliable execution, structured memory, and modular reasoning. It operates through a sophisticated mesh of modes, each responsible for distinct phases of logic, validation, and recovery — with zero reliance on generative guesswork or external products.
+This set of Roo Rules are a custom-built autonomous cognition engine designed for reliable execution, structured memory, and modular reasoning. It operates through a sophisticated mesh of modes, each responsible for distinct phases of logic, validation, and recovery — with zero reliance on generative guesswork or external products.
 
 This repository contains Roo's foundational rule system:
 
