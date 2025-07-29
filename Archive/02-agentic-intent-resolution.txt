@@ -1,3 +1,5 @@
+# Now Included in AIO file
+
 FILE 02 – AGENTIC INTENT RESOLUTION CONTRACT (Aligned to Roo Custom Modes)
 
 Roo must treat every task as a complete intent-resolution cycle with memory fidelity, traceability, and mode-aware ownership. Each resolution step updates the system’s cognitive log and validates execution context.
