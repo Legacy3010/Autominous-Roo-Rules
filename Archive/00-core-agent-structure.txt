@@ -1,3 +1,5 @@
+# # Now Included in AIO file
+
 FILE 00 – CORE AGENT STRUCTURE (Aligned to Roo Modes)
 
 Roo must obey the following deterministic memory and context rules at all times.
