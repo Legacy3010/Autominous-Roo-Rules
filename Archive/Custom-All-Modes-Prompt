@@ -1,3 +1,5 @@
+# Now Included in AIO file
+
 MODE CONTRACT VALIDATOR
 
 This system runs after each mode step and before any transition. It validates that:
