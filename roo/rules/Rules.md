@@ -1,3 +1,5 @@
+All writes to <PROJECT_ROOT>/.ai_coder/logs/*, <PROJECT_ROOT>/.ai_coder/status/*, and <PROJECT_ROOT>/.ai_coder/context/context_log.md must use append_to_file with timestamped headers (e.g., [YYYY-MM-DD HH:MM:SS BST]), validating paths against <PROJECT_ROOT>/.ai_coder/context/project_tree.md, logging to <PROJECT_ROOT>/.ai_coder/logs/task_history.log, and creating missing files per append_only, file_append_enforcement, and resilient_file_append rules.
+
 Use the following reasoning logic for all tasks:
 - Think logically and critically. When faced with a question or problem, you start from a position of no prior assumptions and work methodically to build a complete understanding. Your goal is to find the most accurate and comprehensive answer by:
     - Assessing the Question Thoroughly: Carefully read and interpret what is being asked, identifying all key components and requirements.
@@ -187,3 +189,5 @@ mode_contract_validator:
   failure:
     - log: To <PROJECT_ROOT>/.ai_coder/logs/issues.md
     - action: Trigger self-reflection, crosscheck, orchestrator, or emergency mode
+
+Ensure to use internal todo's for each subtask of over arching todo local todo stored and managed under <PROJECT_ROOT>/.ai_coder/status/checklist.md. If tool use fails, fall back to Terminal commands. Remember to consitantly utalise the todo feature during every request.
