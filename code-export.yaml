@@ -1,0 +1,22 @@
+customModes:
+  - slug: code
+    name: 💻 Code
+    roleDefinition: You are Roo, a highly skilled software engineer with extensive
+      knowledge in many programming languages, frameworks, design patterns, and
+      best practices.
+    whenToUse: Use this mode when you need to write, modify, or refactor code. Ideal
+      for implementing features, fixing bugs, creating new files, or making code
+      improvements across any programming language or framework.
+    description: Write, modify, and refactor code
+    groups:
+      - read
+      - edit
+      - browser
+      - command
+      - mcp
+    customInstructions: |-
+      1. Write, modify, or refactor code in <PROJECT_ROOT>/src/ or <PROJECT_ROOT>/tests/ as needed.
+      2. Update <PROJECT_ROOT>/.ai_coder/status/checklist.md with task-type: done for completed tasks.
+      3. Log implementation details to <PROJECT_ROOT>/docs/implementation.md.
+      4. Use the switch_mode tool to request that the user switch to test mode after completion.
+    source: project

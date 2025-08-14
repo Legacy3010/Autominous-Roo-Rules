@@ -1,0 +1,33 @@
+# Git ignore for Roo Modes
+
+# Project memory and rules (root-scoped)
+/.ai_coder/
+/.roo/
+/.local_backup/
+
+# Logs
+*.log
+logs/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Env files
+.env
+.env.*
+
+# Editor swap/backup
+*~
+*.swp
+*.swo
