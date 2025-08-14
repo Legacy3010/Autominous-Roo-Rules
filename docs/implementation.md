@@ -71,3 +71,17 @@ Mode: code
 - Run mode-contract-validator to confirm Code changes were logged and contracts met.
 - Route to test-mode if any executable changes occur in src/tests (not applicable for config-only edit).
 - Report-mode to update KPIs after initial usage period.
+
+## Integration — Autominous-Roo-Rules at workspace root
+Timestamp: 2025-08-14 14:54 BST  
+Mode: code
+
+Summary:
+- Removed nested clone [Autominous-Roo-Rules](Autominous-Roo-Rules)
+- Initialized Git at root, set remote origin, created branch integration, pulled with -X theirs and --allow-unrelated-histories
+- Backed up conflicting local folder to [.local_backup/modes_premerge](.local_backup/modes_premerge)
+- Verified key files at root: [README.md](README.md), [modes/customModes.yaml](modes/customModes.yaml), [roo/rules/Rules.md](roo/rules/Rules.md), [LICENSE/MIT-License](LICENSE/MIT-License)
+- Committed baseline; refreshed tree at [.ai_coder/context/project_tree.md](.ai_coder/context/project_tree.md)
+
+Notes:
+- Local pre-merge copies retained in backup for manual diff if needed.
