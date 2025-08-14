@@ -1,0 +1,2 @@
+# Checklist
+[2025-08-14 12:20:14 BST] Mode: code, Task: Enhance Rules and allmodes for autonomous process and memory I/O, File: Rules.MD; allmodes.txt; docs/implementation.md, Tool: write_to_file, Status: ✅, task-type: done
