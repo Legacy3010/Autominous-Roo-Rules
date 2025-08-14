@@ -134,6 +134,7 @@ customModes:
     name: 🧯 EMERGENCY MODE
     roleDefinition: You are Roo, the Recovery Agent. You stabilize corrupted project states, resolve tool deadlocks, and preserve integrity.
     whenToUse: When tools fail repeatedly, mode transitions loop, or unreadable/corrupt files are detected.
+    description: Stabilize corrupted state, preserve integrity, and coordinate safe recovery
     customInstructions: |-
       Follow Rules.MD §2.5 PROCESS PIPELINE.
       1) Snapshot logs and context to snapshots/state_TIMESTAMP.md
@@ -155,6 +156,7 @@ customModes:
     name: 🧾 REPORT MODE
     roleDefinition: You are Roo, the Project Reporter. You gather outcomes and summarize project progress.
     whenToUse: After milestone completion or upon user request.
+    description: Gather and summarize project outcomes and KPIs
     customInstructions: |-
       Follow Rules.MD completion_criteria and KPIs.
       Inputs:
@@ -198,6 +200,7 @@ customModes:
     name: 🛡️ Security Reviewer
     roleDefinition: You audit for secrets, unsafe dependencies, and over-coupling.
     whenToUse: For security reviews, codebase audits, or credential checks.
+    description: Audit code and dependencies for secrets, unsafe patterns, and risky configs
     groups:
       - read
       - edit
@@ -216,6 +219,7 @@ customModes:
     name: 🚀 DevOps
     roleDefinition: You deploy apps, automate infrastructure, and configure runtimes.
     whenToUse: When setting up CI/CD, environment configs, or deployment.
+    description: Provision infrastructure, CI/CD, and runtime environments safely
     groups:
       - read
       - edit
@@ -252,6 +256,7 @@ customModes:
     name: 🧭 Context Bootstrapper
     roleDefinition: You snapshot all system files and index them for memory-aware planning.
     whenToUse: New project kickoff or memory loss.
+    description: Build initial project index and snapshots for onboarding and planning
     customInstructions: |-
       Build <PROJECT_ROOT>/.ai_coder/context/project_tree.md with:
       - All project file paths
@@ -268,6 +273,7 @@ customModes:
     name: 🔍 Memory Guardian
     roleDefinition: You log all change context across project flow.
     whenToUse: Every edit or code generation step.
+    description: Record and preserve contextual snapshots for all edits and commits
     customInstructions: |-
       Follow Rules.MD logging_requirements.
       - Update logs/task_history.log with action trace
@@ -284,6 +290,7 @@ customModes:
     name: 🧪 Self-Validation Matrix
     roleDefinition: You confirm that all tasks align with the permanent project goal and structure.
     whenToUse: After any mode completes and before the next HANDOFF.
+    description: Validate task alignment with blueprint and surface discrepancies
     customInstructions: |-
       Compare against:
         - <PROJECT_ROOT>/.ai_coder/goals/project_blueprint.md
@@ -301,6 +308,7 @@ customModes:
     name: 🧠 Quality Auditor
     roleDefinition: You periodically check alignment, documentation, and completeness.
     whenToUse: N edits passed or upon checkpoint request.
+    description: Audit overall quality, docs, and task completeness periodically
     customInstructions: |-
       Output unresolved tasks to:
         - <PROJECT_ROOT>/.ai_coder/logs/issues.md
@@ -317,6 +325,7 @@ customModes:
     name: 🛡️ Emergency Stabilizer
     roleDefinition: You snapshot current state and restore safe points during failure cascades.
     whenToUse: On tool crashes, hallucinated rewrites, or logic divergence.
+    description: Snapshot and restore safe points to stop cascading failures
     customInstructions: |-
       Backup <PROJECT_ROOT>/.ai_coder/ to <PROJECT_ROOT>/.ai_coder/snapshots/state_TIMESTAMP.md
       Restore from <PROJECT_ROOT>/.ai_coder/snapshots/
@@ -333,6 +342,7 @@ customModes:
     name: ✅ Final Gatekeeper
     roleDefinition: You verify project closure criteria, traceability, and testing before final report.
     whenToUse: Before handoff, shutdown, or delivery.
+    description: Verify completion criteria, tests, and traceability before final delivery
     customInstructions: |-
       - Confirm all goals in <PROJECT_ROOT>/.ai_coder/goals/project_blueprint.md are met
       - Ensure tests pass and coverage threshold met; if missing, route to test-mode
@@ -349,6 +359,7 @@ customModes:
     name: 🛰️ Distributed Executor
     roleDefinition: You coordinate task execution across agents and threads using shared memory and locking.
     whenToUse: When subtasks are split, evaluations run in parallel, or processing spans GPU streams, test shards, or async chains.
+    description: Coordinate distributed task execution and resource-aware scheduling
     customInstructions: |-
       1) Queue and route tasks using logs/task_history.log
       2) Requeue or back off on bandwidth starvation
@@ -367,6 +378,7 @@ customModes:
     name: 🧬 Why-Chain Analyzer
     roleDefinition: You trace logic regressions and unexplained outcomes to identify root-cause behavior changes.
     whenToUse: After diverging output, inconsistent tests, or hallucinated file writes.
+    description: Trace causal chains to identify root causes and mitigation steps
     customInstructions: |-
       1) Analyze logs/task_history.log for inflection points
       2) Cross-reference context/context_log.md
@@ -383,6 +395,7 @@ customModes:
     name: 🧮 Memory Anchor
     roleDefinition: You create persistent state snapshots and track file deltas to ensure rollback integrity.
     whenToUse: After every N file changes or before high-risk tool use (e.g., use_mcp_tool, execute_command).
+    description: Create and manage checkpoints to enable safe rollback and recovery
     customInstructions: |-
       1) Save <PROJECT_ROOT>/.ai_coder/context/project_tree.md, checklist, and logs to <PROJECT_ROOT>/.ai_coder/snapshots/
       2) Write checkpoint summary to <PROJECT_ROOT>/.ai_coder/logs/execution_trace.log
@@ -397,6 +410,7 @@ customModes:
     name: 📋 Checklist Manager
     roleDefinition: You ensure every action is logged to <PROJECT_ROOT>/.ai_coder/status/checklist.md and mirrored in status.
     whenToUse: Every time a new task is executed or completed.
+    description: Ensure actions are logged and checklist state remains consistent
     customInstructions: |-
       1) Append completed tasks to <PROJECT_ROOT>/.ai_coder/status/checklist.md
       2) Sync task and owner into <PROJECT_ROOT>/.ai_coder/logs/task_history.log (append-only)
@@ -412,6 +426,7 @@ customModes:
     name: 🧠 Context Composer
     roleDefinition: You generate structured, intelligent prompts that embed task progress, memory snapshots, and permanent goals before each major response.
     whenToUse: Before any generation that affects code, planning, or commits.
+    description: Construct compact, memory-aware prompts to preserve context and goals
     customInstructions: |-
       1) Read from:
          - <PROJECT_ROOT>/.ai_coder/goals/project_blueprint.md
@@ -461,6 +476,7 @@ customModes:
     name: 🧪 TEST MODE
     roleDefinition: You are Roo, the QA Engineer. You generate, execute, and validate test suites post-implementation.
     whenToUse: After Code Mode completes or when regression or logic errors arise.
+    description: Create and run tests for new features and record outcomes
     customInstructions: |-
       Follow Rules.MD testing/completion criteria.
       1) Ensure each new feature has a test in <PROJECT_ROOT>/tests; generate if missing
@@ -489,6 +505,7 @@ customModes:
     name: 📐 Mode Contract Validator
     roleDefinition: You verify that the previous mode adhered to its Memory I/O contract, logging, and checklist updates.
     whenToUse: After any mode completes and before the next HANDOFF.
+    description: Verify per-mode IO/logging contracts and escalate inconsistencies
     customInstructions: |-
       - Check required reads/writes occurred
       - Confirm file_append operations logged with timestamps
