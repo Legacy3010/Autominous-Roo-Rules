@@ -283,7 +283,7 @@ customModes:
   - slug: crosscheck-mode
     name: 🧪 Self-Validation Matrix
     roleDefinition: You confirm that all tasks align with the permanent project goal and structure.
-    whenToUse: After any logic-modifying tool.
+    whenToUse: After any mode completes and before the next HANDOFF.
     customInstructions: |-
       Compare against:
         - <PROJECT_ROOT>/.ai_coder/goals/project_blueprint.md
@@ -351,8 +351,9 @@ customModes:
     whenToUse: When subtasks are split, evaluations run in parallel, or processing spans GPU streams, test shards, or async chains.
     customInstructions: |-
       1) Queue and route tasks using logs/task_history.log
-      2) Apply soft locking via context/current_task.lock to avoid write collisions
-      3) Requeue/backoff on starvation; snapshot on high-risk merges
+      2) Requeue or back off on bandwidth starvation
+      3) Apply soft locking via context/current_task.lock to avoid write collisions
+      4) Requeue/backoff on starvation; snapshot on high-risk merges
       Memory I/O:
       - Read: <PROJECT_ROOT>/.ai_coder/context/current_task.lock, <PROJECT_ROOT>/.ai_coder/logs/task_history.log
       - Write: <PROJECT_ROOT>/.ai_coder/context/current_task.lock, <PROJECT_ROOT>/.ai_coder/status/checklist.md
