@@ -1,3 +1,8 @@
+# DEPRECATION NOTICE
+# Deprecated: consolidated into modes/ALL_MODES.yaml and archived.
+# Reason: Single Source of Truth (SSoT) consolidation — legacy export.
+# ArchivedPath: Archive/exports/ask-export.yaml
+# ArchivedAt: 2025-08-14T16:17:00Z
 customModes:
   - slug: ask
     name: ❓ Ask
