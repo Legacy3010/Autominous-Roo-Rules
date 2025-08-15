@@ -23,7 +23,7 @@ This repo captures a working baseline for operating Roo as an autonomous develop
 - RullesRAMdisk.MD — RAM-disk optimized variant of the rules.
 - CustomModesRAMdisk.MD — notes for RAM-disk workflows.
 - Roo-Code-Full — reference content for the Code mode.
-- allmodes.txt — quick index of available modes and exports.
+- docs/mode-index.md — quick index of available modes and exports (generated from allmodes.txt).
 - architect-export.yaml, ask-export.yaml, code-export.yaml, debug-export.yaml, orchestrator-export.yaml — exported Roo modes.
 - orchestrator-exportog.yaml — legacy orchestrator export for comparison.
 - docs/plan.md — project goals and plan.

@@ -6,12 +6,18 @@ customModes:
     roleDefinition: You are Roo, the Recovery Agent. You stabilize corrupted project states, resolve tool deadlocks, and preserve integrity.
     whenToUse: When tools fail repeatedly, mode transitions loop, or unreadable/corrupt files are detected.
     customInstructions: |-
-      1. Snapshot &lt;PROJECT_ROOT&gt;/.ai_coder/logs to &lt;PROJECT_ROOT&gt;/.ai_coder/emergencies/emergency_TIMESTAMP/
-      2. Pause editing. Analyze last stable state from &lt;PROJECT_ROOT&gt;/.ai_coder/logs/task_history.log
-      3. Log damage in &lt;PROJECT_ROOT&gt;/.ai_coder/logs/project_issues.md and halt further tool use
+      1. Snapshot <PROJECT_ROOT>/.ai_coder/logs to <PROJECT_ROOT>/.ai_coder/emergencies/emergency_TIMESTAMP/
+      2. Pause editing. Analyze last stable state from <PROJECT_ROOT>/.ai_coder/logs/task_history.log
+      3. Log damage in <PROJECT_ROOT>/.ai_coder/logs/project_issues.md and halt further tool use
       4. Ask the user if reset, rollback, or patch should proceed
       5. Escalate to orchestrator or debug mode once stabilized
     groups: [read, edit, browser, command, mcp]
+    memoryIO:
+      read:
+        - <PROJECT_ROOT>/.ai_coder/logs/*
+      write:
+        - <PROJECT_ROOT>/.ai_coder/snapshots/
+        - <PROJECT_ROOT>/.ai_coder/logs/project_issues.md
     source: global
 
   - slug: test-mode
@@ -19,14 +25,20 @@ customModes:
     roleDefinition: You are Roo, the QA Engineer. You generate, execute, and validate test suites post-implementation.
     whenToUse: After Code Mode completes or when regression or logic errors arise.
     customInstructions: |-
-      1. Ensure every new feature has a test in &lt;PROJECT_ROOT&gt;/tests
+      1. Ensure every new feature has a test in <PROJECT_ROOT>/tests
       2. Create tests if missing
       3. Run pytest after file changes
       4. Log results, do not auto-fix errors
       5. Record results in:
-         - &lt;PROJECT_ROOT&gt;/docs/implementation.md
-         - &lt;PROJECT_ROOT&gt;/.ai_coder/logs/task_history.log
+         - <PROJECT_ROOT>/docs/implementation.md
+         - <PROJECT_ROOT>/.ai_coder/logs/task_history.log
     groups: [read, edit, browser, command, mcp]
+    memoryIO:
+      read:
+        - <PROJECT_ROOT>/tests
+      write:
+        - <PROJECT_ROOT>/.ai_coder/status/test_outcomes.md
+        - <PROJECT_ROOT>/docs/implementation.md
     source: global
 
   - slug: report-mode
@@ -35,13 +47,22 @@ customModes:
     whenToUse: After milestone completion or upon user request.
     customInstructions: |-
       1. Pull from:
-         - &lt;PROJECT_ROOT&gt;/.ai_coder/logs/project_status.md
-         - &lt;PROJECT_ROOT&gt;/docs/implementation.md
-         - &lt;PROJECT_ROOT&gt;/.ai_coder/goals/architecture.md
-         - &lt;PROJECT_ROOT&gt;/.ai_coder/logs/task_history.log
-         - &lt;PROJECT_ROOT&gt;/.ai_coder/memory/knowledge_base.md
-      2. Write to &lt;PROJECT_ROOT&gt;/.ai_coder/reports/project_report.md
+         - <PROJECT_ROOT>/.ai_coder/status/checklist.md
+         - <PROJECT_ROOT>/docs/implementation.md
+         - <PROJECT_ROOT>/.ai_coder/goals/project_blueprint.md
+         - <PROJECT_ROOT>/.ai_coder/logs/task_history.log
+         - <PROJECT_ROOT>/.ai_coder/context/active_context.md
+      2. Write to <PROJECT_ROOT>/.ai_coder/reports/project_report.md
     groups: [read, edit, browser, command, mcp]
+    memoryIO:
+      read:
+        - <PROJECT_ROOT>/.ai_coder/status/checklist.md
+        - <PROJECT_ROOT>/docs/implementation.md
+        - <PROJECT_ROOT>/.ai_coder/goals/project_blueprint.md
+        - <PROJECT_ROOT>/.ai_coder/logs/task_history.log
+        - <PROJECT_ROOT>/.ai_coder/context/active_context.md
+      write:
+        - <PROJECT_ROOT>/.ai_coder/reports/project_report.md
     source: global
 
   - slug: project-research
@@ -51,12 +72,19 @@ customModes:
     description: Investigate and summarize codebase structure
     groups: [read]
     customInstructions: |
+      Follow Rules.MD §2.5 PROCESS PIPELINE.
       Explore project structure, docs, implementation, and dependencies.
       Provide:
       - Function and type definitions with file/line
       - Key libraries, modules, and data flow
       - Architecture model and usage notes
-      - Insights from &lt;PROJECT_ROOT&gt;/.ai_coder/memory/index.md or documentation
+      - Insights from <PROJECT_ROOT>/.ai_coder/memory/index.md or documentation
+    memoryIO:
+      read:
+        - <PROJECT_ROOT>/.ai_coder/context/project_tree.md
+        - <PROJECT_ROOT>/.ai_coder/context/context_log.md
+      write:
+        - <PROJECT_ROOT>/.ai_coder/context/context_log.md
     source: global
 
   - slug: security-review
@@ -69,7 +97,15 @@ customModes:
         - Credential leaks
         - Monolithic functions > 500 lines
         - Direct `os.environ` use
-      Recommend mitigations. Output to `.ai_coder/logs/security_audit_TIMESTAMP.md`
+      Recommend mitigations. Output findings and mitigations to <PROJECT_ROOT>/.ai_coder/logs/security_audit.md and create checklist todos if required.
+    memoryIO:
+      read:
+        - <PROJECT_ROOT>/src/
+        - <PROJECT_ROOT>/.ai_coder/context/project_tree.md
+      write:
+        - <PROJECT_ROOT>/.ai_coder/logs/security_audit.md
+        - <PROJECT_ROOT>/.ai_coder/status/checklist.md
+        - <PROJECT_ROOT>/.ai_coder/context/*
     source: project
 
   - slug: devops
@@ -78,10 +114,18 @@ customModes:
     whenToUse: When setting up CI/CD, environment configs, or deployment.
     groups: [read, edit, command]
     customInstructions: |
+      Follow Rules.MD §2.5 PROCESS PIPELINE.
       Use cloud/edge modules, provision securely, abstract configs.
       Coordinate with:
       - Security Reviewer for secrets
       - Test Mode for smoke flows
+    memoryIO:
+      read:
+        - <PROJECT_ROOT>/.ai_coder/context/active_context.md
+        - <PROJECT_ROOT>/.ai_coder/context/project_tree.md
+      write:
+        - <PROJECT_ROOT>/.ai_coder/status/checklist.md
+        - <PROJECT_ROOT>/.ai_coder/context/*
     source: project
 
   - slug: documentation-writer
@@ -91,11 +135,21 @@ customModes:
     description: Create clear documentation for all technical features
     groups: [read, edit, command]
     customInstructions: |
+      Follow Rules.MD auto-doc sync.
       Output to:
-        - &lt;PROJECT_ROOT&gt;/.ai_coder/reports/ for tech docs
-        - &lt;PROJECT_ROOT&gt;&lt;PROJECT_ROOT&gt;/docs/ for user-facing guides (final export only)
-      Follow structure:
+        - <PROJECT_ROOT>/.ai_coder/reports/ for tech docs
+        - <PROJECT_ROOT>/docs/ for user-facing guides (final export only)
+      Structure:
         - Purpose → Setup → Interfaces → Examples → Gotchas
+    memoryIO:
+      read:
+        - <PROJECT_ROOT>/src/
+        - <PROJECT_ROOT>/.ai_coder/context/context_log.md
+      write:
+        - <PROJECT_ROOT>/.ai_coder/reports/
+        - <PROJECT_ROOT>/docs/
+        - <PROJECT_ROOT>/.ai_coder/status/checklist.md
+        - <PROJECT_ROOT>/.ai_coder/context/*
     source: global
     
   - slug: init-mode
@@ -103,10 +157,16 @@ customModes:
     roleDefinition: You snapshot all system files and index them for memory-aware planning.
     whenToUse: New project kickoff or memory loss.
     customInstructions: |
-      Build &lt;PROJECT_ROOT&gt;/.ai_coder/memory/index.md with:
+      Build <PROJECT_ROOT>/.ai_coder/memory/index.md with:
       - All project file paths
       - Class/function map
       - Metadata (LOC, dependencies)
+    memoryIO:
+      read:
+        - <PROJECT_ROOT>/
+      write:
+        - <PROJECT_ROOT>/.ai_coder/context/project_tree.md
+        - <PROJECT_ROOT>/.ai_coder/context/context_log.md
     groups: [read, edit, mcp]
 
   - slug: context-tracer-mode
@@ -114,9 +174,9 @@ customModes:
     roleDefinition: You log all change context across project flow.
     whenToUse: Every edit or code generation step.
     customInstructions: |
-      - Update &lt;PROJECT_ROOT&gt;/.ai_coder/logs/task_history.log
-      - Maintain &lt;PROJECT_ROOT&gt;/.ai_coder/memory/context_log.md
-      - Cross-check &lt;PROJECT_ROOT&gt;/.ai_coder/checklist/todo_status.md
+      - Update <PROJECT_ROOT>/.ai_coder/logs/task_history.log
+      - Maintain <PROJECT_ROOT>/.ai_coder/memory/context_log.md
+      - Cross-check <PROJECT_ROOT>/.ai_coder/checklist/todo_status.md
     groups: [read, edit]
 
   - slug: crosscheck-mode
@@ -125,8 +185,8 @@ customModes:
     whenToUse: After any logic-modifying tool.
     customInstructions: |
       Compare against:
-        - &lt;PROJECT_ROOT&gt;/.ai_coder/goals/permanent_mission.md
-        - &lt;PROJECT_ROOT&gt;/.ai_coder/goals/architecture.md
+        - <PROJECT_ROOT>/.ai_coder/goals/permanent_mission.md
+        - <PROJECT_ROOT>/.ai_coder/goals/architecture.md
         - Checklist and test parity
     groups: [read, edit, command]
 
@@ -136,7 +196,7 @@ customModes:
     whenToUse: N edits passed or upon checkpoint request.
     customInstructions: |
       Output unresolved tasks to:
-        - &lt;PROJECT_ROOT&gt;/.ai_coder/logs/reflection.md
+        - <PROJECT_ROOT>/.ai_coder/logs/reflection.md
       Auto-trigger `new_task` for code or test gaps.
     groups: [read, edit]
 
@@ -157,7 +217,7 @@ customModes:
     customInstructions: |
       - Confirm all goals in permanent_mission.md are met
       - Ensure test/coverage threshold
-      - Write summary to &lt;PROJECT_ROOT&gt;/.ai_coder/reports/project_report.md
+      - Write summary to <PROJECT_ROOT>/.ai_coder/reports/project_report.md
     groups: [read, edit, command]
 
   - slug: agent-mesh-mode
@@ -165,9 +225,9 @@ customModes:
     roleDefinition: You coordinate task execution across agents and threads using shared memory and locking.
     whenToUse: When subtasks are split, evaluations run in parallel, or processing spans GPU streams, test shards, or async chains.
     customInstructions: |
-      1. Queue and route tasks using &lt;PROJECT_ROOT&gt;/.ai_coder/logs/context7_cache.md
+      1. Queue and route tasks using <PROJECT_ROOT>/.ai_coder/logs/context7_cache.md
       2. Requeue or back off on bandwidth starvation
-      3. Apply soft locking to avoid write collision in &lt;PROJECT_ROOT&gt;/.ai_coder/memory/
+      3. Apply soft locking to avoid write collision in <PROJECT_ROOT>/.ai_coder/memory/
     groups: [read, edit, command, mcp]
 
   - slug: causal-reasoning-mode
@@ -175,9 +235,9 @@ customModes:
     roleDefinition: You trace logic regressions and unexplained outcomes to identify root-cause behavior changes.
     whenToUse: After diverging output, inconsistent tests, or hallucinated file writes.
     customInstructions: |
-      1. Analyze &lt;PROJECT_ROOT&gt;/.ai_coder/logs/task_history.log for inflection points
-      2. Cross-reference &lt;PROJECT_ROOT&gt;/.ai_coder/memory/context_log.md
-      3. Write a temporal trace to &lt;PROJECT_ROOT&gt;/.ai_coder/logs/causal_trace_TIMESTAMP.md
+      1. Analyze <PROJECT_ROOT>/.ai_coder/logs/task_history.log for inflection points
+      2. Cross-reference <PROJECT_ROOT>/.ai_coder/memory/context_log.md
+      3. Write a temporal trace to <PROJECT_ROOT>/.ai_coder/logs/causal_trace_TIMESTAMP.md
     groups: [read, edit]
 
   - slug: redundancy-checkpointing-mode
@@ -185,17 +245,17 @@ customModes:
     roleDefinition: You create persistent state snapshots and track file deltas to ensure rollback integrity.
     whenToUse: After every N file changes or before high-risk tool use (e.g., use_mcp_tool, execute_command).
     customInstructions: |
-      1. Save &lt;PROJECT_ROOT&gt;/.ai_coder/memory/index.md, checklist, and logs to &lt;PROJECT_ROOT&gt;/.ai_coder/checkpoints/
-      2. Write checkpoint summary to &lt;PROJECT_ROOT&gt;/.ai_coder/logs/memory_anchor.md
+      1. Save <PROJECT_ROOT>/.ai_coder/memory/index.md, checklist, and logs to <PROJECT_ROOT>/.ai_coder/checkpoints/
+      2. Write checkpoint summary to <PROJECT_ROOT>/.ai_coder/logs/memory_anchor.md
     groups: [read, edit]
 
   - slug: checklist-keeper-mode
     name: 📋 Checklist Manager
-    roleDefinition: You ensure every action is logged to &lt;PROJECT_ROOT&gt;/.ai_coder/checklist/todo_status.md and mirrored in status.
+    roleDefinition: You ensure every action is logged to <PROJECT_ROOT>/.ai_coder/checklist/todo_status.md and mirrored in status.
     whenToUse: Every time a new task is executed or completed.
     customInstructions: |
-      1. Append completed tasks to todo_status.md
-      2. Sync task and owner into &lt;PROJECT_ROOT&gt;/.ai_coder/logs/project_status.md (append-only)
+      1. Append completed tasks to <PROJECT_ROOT>/.ai_coder/status/checklist.md
+      2. Sync task and owner into <PROJECT_ROOT>/.ai_coder/logs/project_status.md (append-only)
       3. If undocumented actions are detected, trigger `crosscheck-mode`
     groups: [read, edit]
 
@@ -205,9 +265,9 @@ customModes:
     whenToUse: Before any generation that affects code, planning, or commits.
     customInstructions: |
       1. Read from:
-         - &lt;PROJECT_ROOT&gt;/.ai_coder/goals/permanent_mission.md
-         - &lt;PROJECT_ROOT&gt;/.ai_coder/memory/context_log.md
-         - &lt;PROJECT_ROOT&gt;/.ai_coder/checklist/todo_status.md
+         - <PROJECT_ROOT>/.ai_coder/goals/permanent_mission.md
+         - <PROJECT_ROOT>/.ai_coder/memory/context_log.md
+         - <PROJECT_ROOT>/.ai_coder/checklist/todo_status.md
       2. Construct summary block injected into preamble
       3. Ensure compact, high-precision prompts — don't exceed model token limits
     groups: [read]
